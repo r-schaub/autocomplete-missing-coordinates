@@ -85,10 +85,10 @@
         var latitudePattern = [];
         var longitudePattern = [];
         for (let i = 0; i < lat.length; i++) {
-            latitudePattern[i] = lat[i].value || '?';
+            latitudePattern[i] = lat[i].value || '0';
         }
         for (let i = 0; i < lon.length; i++) {
-            longitudePattern[i] = lon[i].value || '?';
+            longitudePattern[i] = lon[i].value || '0';
         }
 
         // The latitude pattern is used to create all possible combinations of latitude.
