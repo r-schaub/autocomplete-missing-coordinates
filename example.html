@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Example</title>
+        <meta charSet="utf-8"/>
+        <meta name="viewport" content="width=device-width"/>
+        <style>
+          body {
+              background: #111;
+              color: #fff;
+          }
+          
+          .container {
+              max-width: 800px;
+              margin: 0 auto;
+              padding: 20px;
+              text-align: center;
+          }
+          
+          h1 {
+              margin: 0 0 20px;
+          }
+          
+          h2 {
+              font-weight: 100;
+              text-transform: uppercase;
+              text-align: left;
+          }
+          
+          .possibilities-container table {
+              margin-bottom: 25px;
+              max-height: 200px;
+              display: block;
+              overflow: auto;
+          }
+          .leaflet-popup-content {
+              color: #000;
+          }
+          .leaflet-popup-content p {
+              font-weight: 600;
+              margin: 0 !important;
+          }
+          .form-container {
+              margin: 0 auto;
+              margin-bottom: 25px;
+              width: auto;
+              display: inline-block;
+          }
+          
+          .form-group {
+              position: relative;
+              display: inline-block;
+              width: auto;
+              border: 1px solid #fff;
+              max-width: 800px;
+              padding-top: 10px;
+              margin: 0 auto;
+              text-align: center;
+              padding-left: 5px;
+              padding-right: 5px;
+          }
+          
+          .form-group label {
+              display: block;
+              margin-bottom: 10px;
+              font-size: 14px;
+              color: #333;
+          }
+          
+          .form-group input {
+              color: #fff;
+              background: transparent;
+              display: inline-block;
+              height: 70px;
+              border: 0;
+              border-bottom: 1px solid #ccc;
+              padding: 0 15px;
+              font-size: 25px;
+              margin-bottom: 10px;
+              margin-left: 5px;
+              margin-right: 5px;
+              max-width: 25px;
+              text-align: center;
+                /* disable webkit appearance */
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+          }
+          @media (max-width: 600px) {
+              .form-group input {
+                border-bottom: 1px solid #ccc;
+                padding: 0 10px;
+                font-size: 17px;
+                margin-bottom: 10px;
+                margin-left: 0px;
+                margin-right: 5px;
+                max-width: 15px;
+                text-align: center;
+              }
+          }
+          
+          .form-group input:focus {
+              outline: none;
+          }
+          
+          .form-group .dot {
+              position: absolute;
+              bottom: 18px;
+              margin-left: -3px;
+              font-size: 30px;
+              line-height: 0;
+          }
+          .leaflet-control-layers-list {
+              text-align: left;
+          }
+          button.update:hover {
+              background: #000;
+              border-color: #eee;
+          }
+          
+          button.update {
+              border: 2px solid red;
+              border-radius: 0;
+              font-size: 20px;
+              font-weight: 600;
+              text-transform: uppercase;
+              padding: 10px 20px;
+              margin: 0 auto;
+              margin-top: 25px;
+              display: block;
+              color: #fff;
+              background: transparent;
+              cursor: pointer;
+          }
+          
+          .map {
+              width: 100%;
+              min-height: 500px;
+          }
+        </style>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="form-container">
+                <h2>Latitude</h2>
+                <div class="form-group">
+                    <input type="text" inputmode="verbatim" id="lat[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="text" inputmode="verbatim" id="lat[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="hidden" id="lat[]" value="." />
+                    <span class="dot">.</span>
+                    <input type="text" inputmode="verbatim" id="lat[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="text" inputmode="verbatim" id="lat[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="text" inputmode="verbatim" id="lat[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="text" inputmode="verbatim" id="lat[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="text" inputmode="verbatim" id="lat[]" min="0" max="1" maxlength="1" placeholder="" />
+                </div>
+        
+                <h2>Longitude</h2>
+                <div class="form-group">
+                    <input type="text" inputmode="verbatim" id="lon[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="text" inputmode="verbatim" id="lon[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="hidden" id="lon[]" value="." />
+                    <span class="dot">.</span>
+                    <input type="text" inputmode="verbatim" id="lon[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="text" inputmode="verbatim" id="lon[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="text" inputmode="verbatim" id="lon[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="text" inputmode="verbatim" id="lon[]" min="0" max="1" maxlength="1" placeholder="" />
+                    <input type="text" inputmode="verbatim" id="lon[]" min="0" max="1" maxlength="1" placeholder="" />
+                </div>
+
+            </div>
+            <p class="content-layer">
+                <input type="checkbox" id="consent" />
+                <label for="consent">I agree that service providers such as OpenStreetMap (OSM Foundation <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank">privacy policy</a>) or Google Maps (Google LLC, USA <a href="https://policies.google.com/privacy?hl=de">privacy policy</a>) are used for the use of the interactive map.</label>
+            </p>
+            <button class="update">Update</button>
+
+            <div class="possibilities-container">
+                <h2>Possible combinations</h2>
+                <div class="possibilities"></div>
+            </div>
+
+            <div class="map-container">
+                <div class="map"></div>
+            </div>
+
+        </div>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <script src="main.js"></script>
+    </body> 
+
+</html>
